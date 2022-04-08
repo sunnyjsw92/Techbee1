@@ -1,23 +1,22 @@
 package com.sj.SunnyRestaurant1.vos;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
+//items on the menu that can be ordered. using id as auto generated, dishname, price, spice level and qty
 @Entity
 @Table(name = "OrderMenuItems")
 public class OrderMenuItems {
 
-    enum dishType {mild, medium, spicy}
-
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "OrderMenu_Id")
+    public int orderMenuId;
+
     @Column(name = "dish")
     public String dishName;
 
     @Column(name = "SPICE")
-    public dishType spiceLevel;
+    public String spiceLevel;
 
     @Column(name = "Price")
     public float price;
@@ -25,6 +24,9 @@ public class OrderMenuItems {
     @Column(name = "QTY")
     public int qty;
 
+    @ManyToOne
+    @JoinColumn(name = "customer")
+    public RestaurantOrders restaurantOrders;
 
     public String getDishName() {
         return dishName;
@@ -34,11 +36,11 @@ public class OrderMenuItems {
         this.dishName = dishName;
     }
 
-    public dishType getSpiceLevel() {
+    public String getSpiceLevel() {
         return spiceLevel;
     }
 
-    public void setSpiceLevel(dishType spiceLevel) {
+    public void setSpiceLevel(String spiceLevel) {
         this.spiceLevel = spiceLevel;
     }
 
@@ -58,11 +60,12 @@ public class OrderMenuItems {
         this.qty = qty;
     }
 
-    public OrderMenuItems(String dishName, dishType spiceLevel, float price, int qty) {
-        this.dishName = dishName;
-        this.spiceLevel = spiceLevel;
-        this.price = price;
-        this.qty = qty;
+    public RestaurantOrders getRestaurantOrders() {
+        return restaurantOrders;
+    }
+
+    public void setRestaurantOrders(RestaurantOrders restaurantOrders) {
+        this.restaurantOrders = restaurantOrders;
     }
 
     public OrderMenuItems() {

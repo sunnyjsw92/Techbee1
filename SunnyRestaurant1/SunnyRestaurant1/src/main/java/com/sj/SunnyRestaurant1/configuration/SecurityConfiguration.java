@@ -8,25 +8,30 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 /*3 types of users defined - owner that can do CRUD on menu, chef can view orders,
     user that can do CRUD on orders and menu that is open to all*/
-    private static final String owner = "OWNER";
-    private static final String chef = "CHEF";
-    private static final String user = "USER";
+    private static final String ROLE_1 = "OWNER";
+    private static final String ROLE_2 = "CHEF";
+    private static final String ROLE_3 = "USER";
 
 //    specifying pwds and username for each access mode
     @Override
-    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.inMemoryAuthentication()
-                .withUser("owner").password(passwordEncoder().encode("owner@123")).roles(owner)
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("owner").password(passwordEncoder().encode("owner@123")).roles(ROLE_1)
                 .and()
-                .withUser("chef").password(passwordEncoder().encode("chef@123")).roles(chef)
+                .withUser("chef").password(passwordEncoder().encode("chef@123")).roles(ROLE_2)
                 .and()
-                .withUser("user").password(passwordEncoder().encode("user")).roles(user);
+                .withUser("user").password(passwordEncoder().encode("user")).roles(ROLE_3);
     }
 
 //    encode pwd for additional safety
@@ -35,13 +40,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    here we limit access per user to the endpoints. Note menu is open to all
-    protected void configure (HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("SunnysRestaurant/owner/**").hasRole(owner)
-                .antMatchers("SunnysRestaurant/chef/**").hasRole(chef)
-                .antMatchers("SunnysRestaurant/user/**").hasRole(user)
-                .antMatchers("SunnysRestaurant/menu").permitAll()
+//    here we limit access per user to the endpoints. Note menu is open to all. Added test just for testing
+    protected void configure (HttpSecurity http) throws Exception {
+        http.httpBasic().and().csrf().disable()
+        .authorizeRequests().mvcMatchers("/SunnysRestaurant/owner/**").hasRole(ROLE_1)
+                .mvcMatchers("/SunnysRestaurant/chef/**").hasRole(ROLE_2)
+                .mvcMatchers("/SunnysRestaurant/user/**").hasRole(ROLE_3)
+                .mvcMatchers("/SunnysRestaurant/menu").permitAll()
+                .mvcMatchers("/SunnysRestaurant/test").permitAll()
                 .and().formLogin();
     }
-
 }

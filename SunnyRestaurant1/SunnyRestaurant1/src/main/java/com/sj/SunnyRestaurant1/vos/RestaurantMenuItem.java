@@ -3,24 +3,22 @@ package com.sj.SunnyRestaurant1.vos;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
+//this is modified only by the owner. Everyone can see it. Has dishname, price, spice level as variables
 @Entity
-@Table(name ="RestaurantMenu")
+@Table(name = "RestaurantMenu")
 public class RestaurantMenuItem {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name="dish")
+    @Column(name = "dish")
     public String dishName;
 
     enum spiceLevel {mild, medium, hot}
 
-    @Column(name="SPICE", columnDefinition = "enum('mild', 'medium', 'hot')")
+    @Column(name = "SPICE", columnDefinition = "enum('mild', 'medium', 'hot')")
     @Enumerated(EnumType.STRING)
     public spiceLevel spiceLevel;
 
-    @Column(name="Price")
+    @Column(name = "Price")
     public float price;
 
     @Version
@@ -50,8 +48,7 @@ public class RestaurantMenuItem {
         this.price = price;
     }
 
-    public RestaurantMenuItem(String dishName,
-            RestaurantMenuItem.spiceLevel spiceLevel, float price) {
+    public RestaurantMenuItem(String dishName, RestaurantMenuItem.spiceLevel spiceLevel, float price) {
         this.dishName = dishName;
         this.spiceLevel = spiceLevel;
         this.price = price;
@@ -60,11 +57,12 @@ public class RestaurantMenuItem {
     public RestaurantMenuItem() {
     }
 
-    public RestaurantMenuItem(String dishName,
-            RestaurantMenuItem.spiceLevel spiceLevel, float price, int ver) {
-        this.dishName = dishName;
-        this.spiceLevel = spiceLevel;
-        this.price = price;
-        this.ver = ver;
+    @Override
+    public String toString() {
+        return "RestaurantMenuItem{" +
+                "dishName='" + dishName + '\'' +
+                ", spiceLevel=" + spiceLevel +
+                ", price=" + price +
+                '}';
     }
 }

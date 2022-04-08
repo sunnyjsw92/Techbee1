@@ -1,0 +1,28 @@
+in postman in authorization choose basic authorization and then enter username and pwd there
+[
+    {
+        "dishName": "disha",
+        "spiceLevel": "hot",
+        "price": 12.51
+    },
+    {
+        "dishName": "dishb",
+        "spiceLevel": "mild",
+        "price": 6.22
+    },
+    {
+        "dishName": "dishc",
+        "spiceLevel": "medium",
+        "price": 7.31
+    },
+    {
+        "dishName": "dishd",
+        "spiceLevel": "medium",
+        "price": 9.65
+    },
+    {
+        "dishName": "dishf",
+        "spiceLevel": "hot",
+        "price": 12.56
+    }
+]

@@ -1,0 +1,74 @@
+in postman in authorization choose basic authorization and then enter username and pwd there
+
+{
+    "orderNo": 1,
+    "orderStatus": "open",
+    "orderList": [
+        {
+            "orderMenuId": 2,
+            "dishName": "disha",
+            "spiceLevel": "hot",
+            "price": 12.51,
+            "qty": 2,
+            "user": "user1"
+        },
+        {
+            "orderMenuId": 3,
+            "dishName": "dishb",
+            "spiceLevel": "mild",
+            "price": 6.22,
+            "qty": 1,
+            "user": "user1"
+        },
+        {
+            "orderMenuId": 4,
+            "dishName": "dishc",
+            "spiceLevel": "medium",
+            "price": 7.31,
+            "qty": 3,
+            "user": "user1"
+        },
+        {
+            "orderMenuId": 5,
+            "dishName": "dishf",
+            "spiceLevel": "hot",
+            "price": 12.56,
+            "qty": 1,
+            "user": "user1"
+        }
+    ],
+    "time": "2022-04-08T08:25:32.4922347",
+    "user": "user1"
+}
+
+the controller will set orderStatus and time. Note that you will have to add "order" to the orderlist
+e.g. Restaurant order1 is received. from order list for each of them set.RestaurantOrders(order1)
+{
+    "orderList": [
+        {
+            "dishName": "disha",
+            "spiceLevel": "hot",
+            "price": 12.51,
+            "qty": 2
+        },
+        {
+            "dishName": "dishb",
+            "spiceLevel": "mild",
+            "price": 6.22,
+            "qty": 1
+        },
+        {
+            "dishName": "dishc",
+            "spiceLevel": "medium",
+            "price": 7.31,
+            "qty": 3
+        },
+        {
+            "dishName": "dishf",
+            "spiceLevel": "hot",
+            "price": 12.56,
+            "qty": 1
+        }
+    ],
+    "user": "user1"
+}

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 //repository for the menu items that is accessed only by the owner
 @Repository
-public interface RestaurantMenuJpa extends JpaRepository<RestaurantMenuItem, String> {
+public interface RestaurantMenuJpa extends JpaRepository<RestaurantMenuItem,String> {
 }
