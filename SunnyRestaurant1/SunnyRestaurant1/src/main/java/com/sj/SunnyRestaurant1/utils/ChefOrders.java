@@ -13,16 +13,16 @@ public class ChefOrders {
     @Autowired
     RestaurantOrdersJpa restaurantOrdersJpa;
 
-//    simply gets all the orders for the chef
+    //    simply gets all the orders for the chef
     public List<RestaurantOrders> getChefOrders() {
         return restaurantOrdersJpa.findAll();
     }
 
-//    allows chef to update status
-    public String updateOrderByChef (String user, String status) {
+    //    allows chef to update status
+    public String updateOrderByChef(String user, String status) {
         RestaurantOrders order = restaurantOrdersJpa.findById(user).orElseThrow();
         order.setOrderStatus(status);
         restaurantOrdersJpa.save(order);
-        return " order for "+user+ " is - "+ status;
+        return " order for " + user + " is - " + status;
     }
 }

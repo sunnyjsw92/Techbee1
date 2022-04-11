@@ -1,8 +1,7 @@
 package com.sj.SunnyRestaurant1.vos;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+
 //this is modified only by the owner. Everyone can see it. Has dishname, price, spice level as variables
 @Entity
 @Table(name = "RestaurantMenu")

@@ -9,15 +9,14 @@ import com.sj.SunnyRestaurant1.vos.OrderMenuItems;
 import com.sj.SunnyRestaurant1.vos.RestaurantMenuItem;
 import com.sj.SunnyRestaurant1.vos.RestaurantOrders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("SunnysRestaurant/")
@@ -35,22 +34,17 @@ public class SunnysRestaurantController {
     @Autowired
     ChefOrders chefOrders;
 
-//    checks and only then makes a DB call - trying to minimixe db calls
-    static List<RestaurantMenuItem> menuList;
-
     //    get menu
     @RequestMapping("menu")
     public List<RestaurantMenuItem> getMenu() {
-        menuList = restaurantMenuJpa.findAll();
+        List<RestaurantMenuItem> menuList = restaurantMenuJpa.findAll();
         return menuList;
     }
 
     //    owner to add to menu
     @RequestMapping("owner/addtomenu")
     public String addToMenu(@RequestBody RestaurantMenuItem restaurantMenuItem) {
-        if (menuList.equals(null)) {
-            menuList = restaurantMenuJpa.findAll();
-        }
+        List<RestaurantMenuItem> menuList = restaurantMenuJpa.findAll();
         for (RestaurantMenuItem items : menuList) {
             if (items.getDishName().equalsIgnoreCase(restaurantMenuItem.getDishName())) {
                 return "this dish already exists - try updating this";
@@ -63,9 +57,7 @@ public class SunnysRestaurantController {
     //    owner to add to remove from menu
     @RequestMapping("owner/deletefrommenu")
     public String deleteFromMenu(@RequestBody String dishName) {
-        if (menuList.equals(null)) {
-            menuList = restaurantMenuJpa.findAll();
-        }
+        List<RestaurantMenuItem> menuList = restaurantMenuJpa.findAll();
         for (RestaurantMenuItem items : menuList) {
             if (items.getDishName().equalsIgnoreCase(dishName)) {
                 restaurantMenuJpa.deleteById(dishName);
@@ -78,9 +70,7 @@ public class SunnysRestaurantController {
     //    owner to update menu
     @RequestMapping("owner/updatemenu")
     public String updateMenu(@RequestBody RestaurantMenuItem restaurantMenuItem) {
-        if (menuList.equals(null)) {
-            menuList = restaurantMenuJpa.findAll();
-        }
+        List<RestaurantMenuItem> menuList = restaurantMenuJpa.findAll();
         String dishname = restaurantMenuItem.getDishName().toLowerCase();
         for (RestaurantMenuItem items : menuList) {
             if (items.getDishName().equalsIgnoreCase(dishname)) {
@@ -164,7 +154,7 @@ public class SunnysRestaurantController {
 
     //    user updates order
     @RequestMapping("user/updateorder")
-    public RestaurantOrders userUpdateOrder(@RequestBody RestaurantOrders order) {
+    public ResponseEntity userUpdateOrder(@RequestBody RestaurantOrders order) {
         return userOrders.userUpdateOrder(order);
     }
 

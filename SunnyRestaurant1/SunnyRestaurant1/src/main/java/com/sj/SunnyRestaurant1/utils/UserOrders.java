@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,10 +54,17 @@ public class UserOrders {
     }
 
     //when user wants to update order
-    public RestaurantOrders userUpdateOrder(RestaurantOrders order) {
-        RestaurantOrders updatedorder = SetOrderData.setOrderDataForDb(order);
-        restaurantOrdersJpa.save(updatedorder);
-        return order;
+    public ResponseEntity userUpdateOrder(RestaurantOrders order) {
+        RestaurantOrders rorder = restaurantOrdersJpa.findById(order.getUser()).orElseThrow();
+        if (!rorder.getOrderStatus().equalsIgnoreCase("open")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("order in progress/completed - cannot "
+                    + "change now");
+        }
+        else {
+            rorder = SetOrderData.setOrderDataForDb(order);
+            restaurantOrdersJpa.save(rorder);
+            return new ResponseEntity(rorder, HttpStatus.OK);
+        }
     }
 
 }
