@@ -1,6 +1,7 @@
 package com.sj.SunnyRestaurant1.utils;
 
 import com.sj.SunnyRestaurant1.repositories.RestaurantOrdersJpa;
+import com.sj.SunnyRestaurant1.vos.ReducedRestaurantOrders;
 import com.sj.SunnyRestaurant1.vos.RestaurantOrders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class UserOrders {
 
     @Autowired
     RestaurantOrdersJpa restaurantOrdersJpa;
+
+    @Autowired
+    ConvertOrdersToReducedOrders convertOrdersToReducedOrders;
 
     //when user places order
     public String userPlaceOrder(RestaurantOrders order) {
@@ -49,7 +53,8 @@ public class UserOrders {
                     + "Manager");
         }
         else {
-            return new ResponseEntity(order, HttpStatus.OK);
+            ReducedRestaurantOrders rorder = convertOrdersToReducedOrders.convertRestOrders(order.get());
+            return new ResponseEntity(rorder, HttpStatus.OK);
         }
     }
 
@@ -63,7 +68,8 @@ public class UserOrders {
         else {
             rorder = SetOrderData.setOrderDataForDb(order);
             restaurantOrdersJpa.save(rorder);
-            return new ResponseEntity(rorder, HttpStatus.OK);
+            ReducedRestaurantOrders rrorder = convertOrdersToReducedOrders.convertRestOrders(rorder);
+            return new ResponseEntity(rrorder, HttpStatus.OK);
         }
     }
 

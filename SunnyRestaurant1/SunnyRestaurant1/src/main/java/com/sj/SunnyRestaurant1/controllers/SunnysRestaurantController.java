@@ -6,6 +6,7 @@ import com.sj.SunnyRestaurant1.utils.ChefOrders;
 import com.sj.SunnyRestaurant1.utils.SetOrderData;
 import com.sj.SunnyRestaurant1.utils.UserOrders;
 import com.sj.SunnyRestaurant1.vos.OrderMenuItems;
+import com.sj.SunnyRestaurant1.vos.ReducedRestaurantOrders;
 import com.sj.SunnyRestaurant1.vos.RestaurantMenuItem;
 import com.sj.SunnyRestaurant1.vos.RestaurantOrders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class SunnysRestaurantController {
 
     //    chef to get all open orders
     @RequestMapping("chef/getorders")
-    public List<RestaurantOrders> getForChefOrders() {
+    public List<ReducedRestaurantOrders> getForChefOrders() {
         return chefOrders.getChefOrders();
     }
 
