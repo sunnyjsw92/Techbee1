@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="1" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="0.656">
+    <testcase classname="validate that owner can add, delete and update menu items" name="owner can delete menu" time="0.14">
+        <failure message="The scenario has pending or undefined step(s)" type="io.cucumber.java.PendingException">
+            <![CDATA[Given owner is on the delete menu website...................................pending
+When owner logs in and deleted item.........................................skipped
+Then the menu does not show the deleted item................................skipped
+]]>
+        </failure>
+    </testcase>
+</testsuite>
